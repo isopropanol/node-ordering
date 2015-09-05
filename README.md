@@ -20,4 +20,4 @@ Node provides the RESTful API. Angular provides the frontend and accesses the AP
 
 
 ###From
-Basic Structure forked from [Node todo app](http://scotch.io/series/node-and-angular-to-do-app)
+Basic Structure taken from [Node todo app](http://scotch.io/series/node-and-angular-to-do-app)
