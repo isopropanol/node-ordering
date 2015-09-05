@@ -1,0 +1,87 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="quickOrder">
+<head>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>Node/Angular Menu App</title>
+
+	<!-- SCROLLS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/vendor/admin-lte-2.1.1/css/AdminLTE.min.css">
+
+
+	<!-- SPELLS -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script><!-- load bootstrap -->
+	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
+	<script src="js/services/menus.js"></script> <!-- load our menu service -->
+	<script src="js/core.js"></script> <!-- load our main application -->
+	<script src="vendor/admin-lte-2.1.1/js/app.min.js"></script>
+
+</head>
+<!-- SET THE CONTROLLER -->
+<body ng-controller="mainController">
+	<div class="container">
+
+		<!-- HEADER AND Menu COUNT -->
+
+
+		<!-- Menu LIST -->
+		<div class="row" ng-show="loading">
+			<div class="col-sm-12">
+				<p class="text-center " >
+						<span class="fa fa-spinner fa-spin fa-3x"></span>
+				</p>
+			</div>
+		</div>
+		<div id="menu-list" class="row">
+			<div class="col-sm-6" ng-repeat="menu in menus">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">
+							{{menu.name}}
+						</h3>
+						<p>
+							{{menu.description}}
+						</p>
+					</div>
+					<div class="box-body">
+
+					</div>
+					
+				</div>
+
+			</div>
+		</div>
+
+		<!-- FORM TO CREATE MENU -->
+		<div id="menu-form" class="row">
+			<div class="col-sm-8 col-sm-offset-2 text-center">
+				<form>
+					<div class="form-group">
+
+						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+						<input type="text" class="form-control input-lg text-center" placeholder="" ng-model="formData.text">
+					</div>
+
+					<!-- createMenu() WILL CREATE NEW Menus -->
+					<button type="submit" class="btn btn-primary btn-lg" ng-click="createMenu()">Add</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="text-center text-muted">
+			<p>A quick ording app by me</p>
+			
+		</div>
+
+	</div>
+
+</body>
+</html>

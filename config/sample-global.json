@@ -1,0 +1,11 @@
+{
+    "applications": {
+       "sampleapp":{
+        "applicationId": "", 
+        "masterKey": ""
+       }
+    }, 
+    "global": {
+        "parseVersion": "1.4.0"
+    }
+}
