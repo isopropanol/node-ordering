@@ -1,6 +1,6 @@
 # Node Menu App
 
-A [quick application](https://ridecell.parseapp.com) which displays a menu of items and allows one to schedule an order in a queue for pick up.
+A [quick application](https://ridecell.parseapp.com) which displays a menu of items and allows one to schedule an order in a queue for pick up.  The admin can view orders [here](https://ridecell.parseapp.com/admin)
 
 A Node app built with Parse and Angular.
 
