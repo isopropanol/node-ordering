@@ -47,6 +47,8 @@ Node provides the RESTful API. Angular provides the frontend and accesses the AP
 	- custom pricing
 	- custom images
  - Twilio integration - sms when order’s ready
+ - Abstract some logic: Move some of the Parse Queries to models from routes.js
+ - Filter based on pickupAt greater than Timezone's midnight for Orders get request.
 
 
 ###From
