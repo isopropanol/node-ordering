@@ -35,76 +35,85 @@
 
 </head>
 <!-- SET THE CONTROLLER -->
-<body ng-controller="mainController">
-	<div class="container">
+<body ng-controller="mainController" class="layout-top-nav">
+	<div class="content-wrapper">
 
-		<!-- HEADER AND Menu COUNT -->
+		<div class="container" style="padding-top:30px;">
 
+			<!-- HEADER AND Menu COUNT -->
 
-		<!-- Menu LIST -->
-		<div class="row" ng-show="loading">
-			<div class="col-sm-12">
-				<p class="text-center " >
-						<span class="fa fa-spinner fa-spin fa-3x"></span>
-				</p>
-			</div>
-		</div>
-		<div id="menu-list" class="row">
-			<div class="col-sm-6" ng-repeat="menu in menus">
-				<div class="box">
-					<div class="box-header">
-						<h3 class="box-title">
-							{{menu.name}}
-						</h3>
-						<p>
-							{{menu.description}}
-						</p>
-					</div>
-					<div class="box-body">
-						<ul class="products-list product-list-in-box">
-							<li class="item" ng-repeat="menuItem in menu.menuItems">
-								<div class="product-img">
-									<img src="" alt="Product Image">
-								</div>
-								<div class="product-info">
-									<a href="" class="product-title" ng-click="createOrder(menuItem)"> {{menuItem.name}}
-										<span class="label label-warning pull-right">$9</span>
-									</a>
-									<span class="product-description">
-									  {{menuItem.description}}
-									</span>
-								</div>
-							</li><!-- /.item -->
-
-						</ul>
-					</div>
-					
+			<div class="row">
+				<div class="col-sm-12">
+					<h3 class="" >UCafe  
+						<small>order ahead, don't fall behind</small>
+					</h3>
 				</div>
-
 			</div>
-		</div>
+			<!-- Menu LIST -->
+			<div class="row" ng-show="loading">
+				<div class="col-sm-12">
+					<p class="text-center " >
+							<span class="fa fa-spinner fa-spin fa-3x"></span>
+					</p>
+				</div>
+			</div>
+			<div id="menu-list" class="row">
+				<div class="col-sm-6" ng-repeat="menu in menus">
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">
+								{{menu.name}}
+							</h3>
+							<p>
+								{{menu.description}}
+							</p>
+						</div>
+						<div class="box-body">
+							<ul class="products-list product-list-in-box">
+								<li class="item" ng-repeat="menuItem in menu.menuItems">
+									<div class="product-img">
+										<img src="" alt="{{menuItem.name}}">
+									</div>
+									<div class="product-info">
+										<a href="" class="product-title" ng-click="createOrder(menuItem)"> {{menuItem.name}}
+											<span class="label label-warning pull-right">$9</span>
+										</a>
+										<span class="product-description">
+										  {{menuItem.description}}
+										</span>
+									</div>
+								</li><!-- /.item -->
 
-		<!-- FORM TO CREATE MENU -->
-		<div id="menu-form" class="row">
-			<div class="col-sm-8 col-sm-offset-2 text-center">
-				<form>
-					<div class="form-group">
-
-						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-						<input type="text" class="form-control input-lg text-center" placeholder="" ng-model="formData.text">
+							</ul>
+						</div>
+						
 					</div>
 
-					<!-- createMenu() WILL CREATE NEW Menus -->
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="createMenu()">Add</button>
-				</form>
+				</div>
 			</div>
-		</div>
 
-		<div class="text-center text-muted">
-			<p>A quick ording app by me</p>
-			
-		</div>
+			<!-- FORM TO CREATE MENU -->
+			<div id="menu-form" class="row">
+				<div class="col-sm-8 col-sm-offset-2 text-center">
+					<form>
+						<div class="form-group">
 
+							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+							<input type="text" class="form-control input-lg text-center" placeholder="" ng-model="formData.text">
+						</div>
+
+						<!-- createMenu() WILL CREATE NEW Menus -->
+						<button type="submit" class="btn btn-primary btn-lg" ng-click="createMenu()">Add</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="text-center text-muted">
+				<p>A quick ording app by me</p>
+				
+			</div>
+
+		</div>
 	</div>
 	<script type="text/ng-template" id="modal.html" src="/views/orderModal.html"></script>
 
