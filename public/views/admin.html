@@ -1,5 +1,53 @@
-<div class="jumbotron text-center">
-		<h1>Home Page</h1>
+<div class="container" style="padding-top:30px;">
 
-		<p>{{ message }}</p>
-</div>
+			<!-- HEADER AND Menu COUNT -->
+
+			<div class="row">
+				<div class="col-sm-12">
+					<h2 class="" >Orders 
+						<small></small>
+					</h2>
+				</div>
+			</div>
+			<!-- Menu LIST -->
+			<div class="row" ng-show="loading">
+				<div class="col-sm-12">
+					<p class="text-center " >
+							<span class="fa fa-spinner fa-spin fa-3x"></span>
+					</p>
+				</div>
+			</div>
+
+			<div class="row" ng-show="orders.length > 0">
+				<div class="col-sm-12">
+					<div class="box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">
+								Orders for Pick up
+							</h3>
+						</div>
+						<div class="box-body">
+							<ul class="products-list product-list-in-box">
+								<li class="item" ng-repeat="order in orders">
+									<div class="product-img">
+										<img src="" alt="{{order.menuItem.name}}">
+									</div>
+									<div class="product-info">
+										<a href="" class="product-title"> {{order.menuItem.name}}
+											<span class="label label-warning pull-right">$9</span>
+										</a>
+										<span class="product-description">
+										  {{order.pickupAtString | date:"h:mma"}}
+										</span>
+									</div>
+								</li><!-- /.item -->
+
+							</ul>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+
+
+	</div>

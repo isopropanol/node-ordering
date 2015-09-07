@@ -17,7 +17,6 @@ angular.module('menuController', ['ngRoute'])
 
 	// inject the Menu service factory into our controller
 	.controller('mainController', ['$scope','$http','Menus','Orders',"ModalService", function($scope, $http, Menus, Orders, ModalService) {
-		console.log("mainController")
 		$scope.formData = {};
 		$scope.loading = true;
 		$scope.orders = [];
@@ -32,16 +31,6 @@ angular.module('menuController', ['ngRoute'])
 				$scope.menus = data;
 				$scope.loading = false;
 			});
-
-		// Orders.get()
-		// 	.success(function(data) {
-		// 		data.forEach(function(datum,index){
-		// 			var dateIso = Date.parse(datum.pickupAt.iso);
-		// 			datum.pickupAtString = dateIso;
-		// 			data[index] = datum;
-		// 		})
-		// 		$scope.orders = data;
-		// 	});
 
 		// CREATE ==================================================================
 		// when submitting the add form, send the text to the node API
@@ -103,7 +92,18 @@ angular.module('menuController', ['ngRoute'])
 			close($scope.order, 500); // close, but give 500ms for bootstrap to animate
 		};
 	}])
-	.controller("adminController",['$scope','$http', function($scope, $http) {
-		console.log('adminController')
-		$scope.message = "hello";
+	.controller("adminController",['$scope','$http','Orders', function($scope, $http, Orders) {
+		$scope.loading = true;
+		$scope.orders = [];
+
+		Orders.get()
+			.success(function(data) {
+				data.forEach(function(datum,index){
+					var dateIso = Date.parse(datum.pickupAt.iso);
+					datum.pickupAtString = dateIso;
+					data[index] = datum;
+				})
+				$scope.orders = data;
+				$scope.loading = false;
+			});
 	}])
