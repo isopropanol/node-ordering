@@ -1,7 +1,7 @@
 angular.module('menuController', [])
 
 	// inject the Menu service factory into our controller
-	.controller('mainController', ['$scope','$http','Menus',"ModalService", function($scope, $http, Menus, ModalService) {
+	.controller('mainController', ['$scope','$http','Menus','Orders',"ModalService", function($scope, $http, Menus, Orders, ModalService) {
 		$scope.formData = {};
 		$scope.loading = true;
 
@@ -33,6 +33,10 @@ angular.module('menuController', [])
 			//it's a bootstrap element, use 'modal' to show it
 				modal.element.modal();
 				modal.close.then(function(result) {
+					Orders.create(result)
+						.success(function(data){
+
+						});
 					console.log(result);
 				});
 			});
@@ -51,18 +55,7 @@ angular.module('menuController', [])
 			// }
 		};
 
-		// DELETE ==================================================================
-		// delete a menu after checking it
-		// $scope.deleteMenu = function(id) {
-		// 	$scope.loading = true;
 
-		// 	Menus.delete(id)
-		// 		// if successful creation, call our get function to get all the new menus
-		// 		.success(function(data) {
-		// 			$scope.loading = false;
-		// 			$scope.menus = data; // assign our new list of menus
-		// 		});
-		// };
 	}])
 	.controller("modalController",['$scope','$http','menuItem','close','$element', function($scope, $http, menuItem ,close,$element) {
 		var coeff = 1000 * 60 * 5;
@@ -72,7 +65,8 @@ angular.module('menuController', [])
 			firstname:"",
 			lastname:"",
 			phone:"",
-			time: rounded
+			time: rounded,
+			menuItemId:menuItem.objectId
 		}
 		$scope.menuItem = menuItem;
 
