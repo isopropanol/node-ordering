@@ -33,14 +33,10 @@ module.exports = function(app) {
 		}).then(function(){
 			var args = _.toArray(arguments);
 			args.forEach(function(menuItems,index){
-				console.log("we got "+menuItems.length);
 				menu = menus[index];
-				console.log("for: "+menu.get('name'));
 				menu.set('menuItems',JSON.parse(JSON.stringify(menuItems)));
-				console.log(menu)
 				menus[index] = menu;
 			})
-			console.log("we have "+menus.length+" menus");
 
 			res.json(menus)
 		})
@@ -57,11 +53,29 @@ module.exports = function(app) {
 
 	// orders ----------------------------
 
+	app.get('/api/orders',function(req,res){
+		var ordersQuery = new Parse.Query("Order");
+		ordersQuery.include("menuItem");
+		ordersQuery.find().then(function(orders){
+			console.log(orders[0].get('menuItem'));
+			orders.forEach(function(order,index){
+				var menuItem = JSON.parse(JSON.stringify(order.get('menuItem')))
+				order.set('menuItem',menuItem);
+				orders[index] = order;
+			})
+			res.json(orders);
+		})
+	})
+
 	//Create order and associate it with menuItem
 	app.post('/api/orders',function(req,res){
 		var menuItemId = req.body.menuItemId;
 		var menuItemQuery = new Parse.Query("MenuItem");
-		menuItemQuery.first().then(function(menuItem){
+		menuItemQuery.equalTo("objectId",menuItemId)
+		var menuItem;
+
+		menuItemQuery.first().then(function(returnedMenuItem){
+			menuItem = returnedMenuItem;
 			var orderObject = Parse.Object.extend("Order");
 			var order = new orderObject();
 
@@ -69,9 +83,11 @@ module.exports = function(app) {
 				clientFirstname:req.body.firstname,
 				clientLastname:req.body.lastname,
 				menuItem:menuItem,
+				phone:req.body.phone,
 				pickupAt:new Date(req.body.time)
 			})
 		}).then(function(order){
+			order.set('menuItem',JSON.parse(JSON.stringify(menuItem)));
 			res.json(order)
 		},function(error){
 			console.log(error);

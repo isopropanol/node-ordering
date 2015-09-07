@@ -4,6 +4,7 @@ angular.module('menuController', [])
 	.controller('mainController', ['$scope','$http','Menus','Orders',"ModalService", function($scope, $http, Menus, Orders, ModalService) {
 		$scope.formData = {};
 		$scope.loading = true;
+		$scope.orders = [];
 
 		// GET =====================================================================
 		// when landing on the page, get all menus and show them
@@ -15,6 +16,16 @@ angular.module('menuController', [])
 				$scope.menus = data;
 				$scope.loading = false;
 			});
+
+		// Orders.get()
+		// 	.success(function(data) {
+		// 		data.forEach(function(datum,index){
+		// 			var dateIso = Date.parse(datum.pickupAt.iso);
+		// 			datum.pickupAtString = dateIso;
+		// 			data[index] = datum;
+		// 		})
+		// 		$scope.orders = data;
+		// 	});
 
 		// CREATE ==================================================================
 		// when submitting the add form, send the text to the node API
@@ -29,15 +40,16 @@ angular.module('menuController', [])
 					menuItem: menuItem
 				}
 			}).then(function(modal) {
-				console.log(modal)
 			//it's a bootstrap element, use 'modal' to show it
 				modal.element.modal();
 				modal.close.then(function(result) {
 					Orders.create(result)
 						.success(function(data){
-
+							var dateIso = Date.parse(data.pickupAt.iso);
+							data.pickupAtString = dateIso;
+							$scope.orders.push(data);
 						});
-					console.log(result);
+					
 				});
 			});
 			// if ($scope.formData.text != undefined) {
@@ -66,7 +78,7 @@ angular.module('menuController', [])
 			lastname:"",
 			phone:"",
 			time: rounded,
-			menuItemId:menuItem.objectId
+			menuItemId:menuItem.objectId,
 		}
 		$scope.menuItem = menuItem;
 
