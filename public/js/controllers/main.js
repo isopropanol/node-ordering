@@ -1,9 +1,25 @@
-angular.module('menuController', [])
+angular.module('menuController', ['ngRoute'])
+	.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider){
+		$routeProvider
+			.when('/admin', {
+			templateUrl: 'views/admin.html',
+			controller: 'adminController'
+			})
+			.when('/options', {
+			templateUrl: 'views/index.html',
+			controller: 'mainController'
+			})
+			.otherwise({
+				redirectTo:"/options"
+			})
+			 $locationProvider.html5Mode(true);
+	}])
 
 	// inject the Menu service factory into our controller
 	.controller('mainController', ['$scope','$http','Menus','Orders',"ModalService", function($scope, $http, Menus, Orders, ModalService) {
 		$scope.formData = {};
 		$scope.loading = true;
+		$scope.orders = [];
 
 		// GET =====================================================================
 		// when landing on the page, get all menus and show them
@@ -24,20 +40,21 @@ angular.module('menuController', [])
 			// if form is empty, nothing will happen
 			ModalService.showModal({
 				templateUrl: "views/orderModal.html",
-				controller: "modalController",
+				controller: "createOrderModalController",
 				inputs: {
 					menuItem: menuItem
 				}
 			}).then(function(modal) {
-				console.log(modal)
 			//it's a bootstrap element, use 'modal' to show it
 				modal.element.modal();
 				modal.close.then(function(result) {
 					Orders.create(result)
 						.success(function(data){
-
+							var dateIso = Date.parse(data.pickupAt.iso);
+							data.pickupAtString = dateIso;
+							$scope.orders.push(data);
 						});
-					console.log(result);
+					
 				});
 			});
 			// if ($scope.formData.text != undefined) {
@@ -57,7 +74,7 @@ angular.module('menuController', [])
 
 
 	}])
-	.controller("modalController",['$scope','$http','menuItem','close','$element', function($scope, $http, menuItem ,close,$element) {
+	.controller("createOrderModalController",['$scope','$http','menuItem','close','$element', function($scope, $http, menuItem ,close,$element) {
 		var coeff = 1000 * 60 * 5;
 		var date = new Date();  //or use any other date
 		var rounded = new Date(Math.round(date.getTime() / coeff) * coeff)
@@ -66,13 +83,67 @@ angular.module('menuController', [])
 			lastname:"",
 			phone:"",
 			time: rounded,
-			menuItemId:menuItem.objectId
+			menuItemId:menuItem.objectId,
 		}
 		$scope.menuItem = menuItem;
 
 		$scope.close = function() {
 			console.log("SUBMITTED")
 			$element.modal('hide')
+			close($scope.order, 500); // close, but give 500ms for bootstrap to animate
+		};
+	}])
+	.controller("adminController",['$scope','$http','Orders','ModalService', function($scope, $http, Orders, ModalService) {
+		$scope.loading = true;
+		$scope.orders = [];
+
+
+		Orders.get()
+			.success(function(data) {
+				var now = new Date();
+				data.forEach(function(datum,index){
+					var dateIso = Date.parse(datum.pickupAt.iso);
+					if(dateIso < now){
+						datum.status = 'LATE'
+					}
+					datum.pickupAtString = dateIso;
+					data[index] = datum;
+				})
+				$scope.orders = data;
+				$scope.loading = false;
+			});
+
+		//launch update status modal
+		$scope.updateStatus = function(order,index){
+			ModalService.showModal({
+				templateUrl: "views/orderStatusModal.html",
+				controller: "orderStatusModalController",
+				inputs: {
+					order: order
+				}
+			}).then(function(modal) {
+			//it's a bootstrap element, use 'modal' to show it
+				modal.element.modal();
+				modal.close.then(function(result) {
+					Orders.update(result)
+						.success(function(data){
+							$scope.orders[index] = result;
+						});
+					
+				});
+			});
+		}
+	}])
+	.controller("orderStatusModalController",['$scope','$http','order','close','$element', function($scope, $http, order ,close,$element) {
+		var coeff = 1000 * 60 * 5;
+		var date = new Date();  //or use any other date
+		var rounded = new Date(Math.round(date.getTime() / coeff) * coeff)
+		$scope.order = order
+		$scope.order.orderId = order.objectId;
+
+		$scope.setStatus = function(status) {
+			$element.modal('hide')
+			$scope.order.status = status;
 			close($scope.order, 500); // close, but give 500ms for bootstrap to animate
 		};
 	}])
