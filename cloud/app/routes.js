@@ -17,6 +17,7 @@ module.exports = function(app) {
 
 	// api ---------------------------------------------------------------------
 
+	// menus ----------------------------
 	app.get('/api/menus', function(req, res) {
 		var menus;
 		var menuQuery = new Parse.Query("Menu");
@@ -53,6 +54,30 @@ module.exports = function(app) {
 		
 
 	});
+
+	// orders ----------------------------
+
+	//Create order and associate it with menuItem
+	app.post('/api/orders',function(req,res){
+		var menuItemId = req.body.menuItemId;
+		var menuItemQuery = new Parse.Query("MenuItem");
+		menuItemQuery.first().then(function(menuItem){
+			var orderObject = Parse.Object.extend("Order");
+			var order = new orderObject();
+
+			return order.save({
+				clientFirstname:req.body.firstname,
+				clientLastname:req.body.lastname,
+				menuItem:menuItem,
+				pickupAt:new Date(req.body.time)
+			})
+		}).then(function(order){
+			res.json(order)
+		},function(error){
+			console.log(error);
+			res.json(400)
+		})
+	})
 
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
