@@ -16,7 +16,7 @@ Node provides the RESTful API. Angular provides the frontend and accesses the AP
 
 ## Installation
 
-1. Clone the repository: `git clone git@github.com:scotch-io/node-todo`
+1. Clone the repository: `https://github.com/isopropanol/node-ordering.git`
 2. Start a Parse Repo at Parse.com and install parse command line
 3. Transfer masterkey and app id to sample-global.json and rename to global.json
 4. parse deploy
