@@ -1,0 +1,45 @@
+<div id="orderModal" role="dialog" class="modal fade" >
+	<div class="modal-dialog">
+		<form id="orderForm" name="input" ng-submit="close()" action="" method="post" class="form-horizontal modal-content">
+			<div class="modal-header">
+				<button type="button" data-dismiss="modal" class="close">×</button>
+				<h4 class="modal-title">Set Order Status</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<ul class="products-list product-list-in-box">
+								<li class="item">
+									<div class="product-img">
+										<img src="/img/plate.jpg" alt="{{order.menuItem.name}}">
+									</div>
+									<div class="product-info">
+										<h4 class="product-title">{{order.clientFirstname}} {{order.clientLastname}} 
+											<small> Pick up: {{order.pickupAtString | date:"h:mma"}}</small>
+											<span class="label" ng-show="order.status">{{order.status}}</span>
+											<span class="label label-warning pull-right">$9</span>
+										</h4>
+										<span class="product-description">
+										  {{order.menuItem.name}} 
+										</span>
+									</div>
+								</li><!-- /.item -->
+
+							</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-8 col-sm-offset-2">
+						<div class="">
+							<button class="btn btn-lg btn-block btn-primary" ng-click="setStatus('picked up')">Picked Up</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+			</div>
+		</form>
+	</div>
+</div>
+

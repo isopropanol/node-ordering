@@ -28,16 +28,20 @@
 						</div>
 						<div class="box-body">
 							<ul class="products-list product-list-in-box">
-								<li class="item" ng-repeat="order in orders">
+								<li class="item" ng-repeat="order in orders" ng-click="updateStatus(order,$index)">
 									<div class="product-img">
-										<img src="" alt="{{order.menuItem.name}}">
+										<img src="/img/plate.jpg" alt="{{order.menuItem.name}}">
 									</div>
 									<div class="product-info">
-										<a href="" class="product-title"> {{order.menuItem.name}}
+										<h4 class="product-title">{{order.clientFirstname}} {{order.clientLastname}} 
+											<small ng-show="order.phone"> {{order.phone}} -</small>
+											<small> Pick up: </small>
+											{{order.pickupAtString | date:"h:mma"}}
+											<span class="label label-primary" >{{order.status}}</span>
 											<span class="label label-warning pull-right">$9</span>
-										</a>
+										</h4>
 										<span class="product-description">
-										  {{order.pickupAtString | date:"h:mma"}}
+										  {{order.menuItem.name}} 
 										</span>
 									</div>
 								</li><!-- /.item -->

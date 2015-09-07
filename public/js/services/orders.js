@@ -9,6 +9,9 @@ angular.module('orderService', [])
 			},
 			create : function(data) {
 				return $http.post('/api/orders', data);
+			},
+			update : function(data){
+				return $http.post('/api/orders/update', data);
 			}
 			// delete : function(id) {
 			// 	return $http.delete('/api/menus/' + id);

@@ -95,6 +95,23 @@ module.exports = function(app) {
 		})
 	})
 
+	//Update order with status
+	app.post('/api/orders/update',function(req,res){
+		var orderId = req.body.orderId
+		var orderQuery = new Parse.Query("Order");
+		orderQuery.equalTo("objectId",orderId);
+
+		orderQuery.first().then(function(order){
+			order.set('status',req.body.status);
+			return order.save();
+		}).then(function(order){
+			res.json(order)
+		},function(error){
+			console.log(error);
+			res.json(400)
+		})
+	})
+
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
 		console.log("view load");

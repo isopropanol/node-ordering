@@ -40,7 +40,7 @@ angular.module('menuController', ['ngRoute'])
 			// if form is empty, nothing will happen
 			ModalService.showModal({
 				templateUrl: "views/orderModal.html",
-				controller: "modalController",
+				controller: "createOrderModalController",
 				inputs: {
 					menuItem: menuItem
 				}
@@ -74,7 +74,7 @@ angular.module('menuController', ['ngRoute'])
 
 
 	}])
-	.controller("modalController",['$scope','$http','menuItem','close','$element', function($scope, $http, menuItem ,close,$element) {
+	.controller("createOrderModalController",['$scope','$http','menuItem','close','$element', function($scope, $http, menuItem ,close,$element) {
 		var coeff = 1000 * 60 * 5;
 		var date = new Date();  //or use any other date
 		var rounded = new Date(Math.round(date.getTime() / coeff) * coeff)
@@ -92,9 +92,10 @@ angular.module('menuController', ['ngRoute'])
 			close($scope.order, 500); // close, but give 500ms for bootstrap to animate
 		};
 	}])
-	.controller("adminController",['$scope','$http','Orders', function($scope, $http, Orders) {
+	.controller("adminController",['$scope','$http','Orders','ModalService', function($scope, $http, Orders, ModalService) {
 		$scope.loading = true;
 		$scope.orders = [];
+
 
 		Orders.get()
 			.success(function(data) {
@@ -106,4 +107,38 @@ angular.module('menuController', ['ngRoute'])
 				$scope.orders = data;
 				$scope.loading = false;
 			});
+
+		//launch update status modal
+		$scope.updateStatus = function(order,index){
+			ModalService.showModal({
+				templateUrl: "views/orderStatusModal.html",
+				controller: "orderStatusModalController",
+				inputs: {
+					order: order
+				}
+			}).then(function(modal) {
+			//it's a bootstrap element, use 'modal' to show it
+				modal.element.modal();
+				modal.close.then(function(result) {
+					Orders.update(result)
+						.success(function(data){
+							$scope.orders[index] = result;
+						});
+					
+				});
+			});
+		}
+	}])
+	.controller("orderStatusModalController",['$scope','$http','order','close','$element', function($scope, $http, order ,close,$element) {
+		var coeff = 1000 * 60 * 5;
+		var date = new Date();  //or use any other date
+		var rounded = new Date(Math.round(date.getTime() / coeff) * coeff)
+		$scope.order = order
+		$scope.order.orderId = order.objectId;
+
+		$scope.setStatus = function(status) {
+			$element.modal('hide')
+			$scope.order.status = status;
+			close($scope.order, 500); // close, but give 500ms for bootstrap to animate
+		};
 	}])
