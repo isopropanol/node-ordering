@@ -99,8 +99,12 @@ angular.module('menuController', ['ngRoute'])
 
 		Orders.get()
 			.success(function(data) {
+				var now = new Date();
 				data.forEach(function(datum,index){
 					var dateIso = Date.parse(datum.pickupAt.iso);
+					if(dateIso < now){
+						datum.status = 'LATE'
+					}
 					datum.pickupAtString = dateIso;
 					data[index] = datum;
 				})

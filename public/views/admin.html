@@ -37,7 +37,7 @@
 											<small ng-show="order.phone"> {{order.phone}} -</small>
 											<small> Pick up: </small>
 											{{order.pickupAtString | date:"h:mma"}}
-											<span class="label label-primary" >{{order.status}}</span>
+											<span class="label" ng-class="{ 'label-primary': order.status=='picked up', 'label-danger':order.status == 'LATE' }" >{{order.status}}</span>
 											<span class="label label-warning pull-right">$9</span>
 										</h4>
 										<span class="product-description">

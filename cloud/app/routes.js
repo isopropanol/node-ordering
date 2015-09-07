@@ -56,6 +56,8 @@ module.exports = function(app) {
 	app.get('/api/orders',function(req,res){
 		var ordersQuery = new Parse.Query("Order");
 		ordersQuery.include("menuItem");
+		ordersQuery.ascending('pickupAt');
+		ordersQuery.notEqualTo("status",'picked up');
 		ordersQuery.find().then(function(orders){
 			console.log(orders[0].get('menuItem'));
 			orders.forEach(function(order,index){
