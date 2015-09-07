@@ -1,1 +1,1 @@
-angular.module('quickOrder', ['menuController', 'menuService','orderService','angularModalService','mgcrea.ngStrap']);
+angular.module('quickOrder', ['menuController','ngRoute', 'menuService','orderService','angularModalService','mgcrea.ngStrap']);

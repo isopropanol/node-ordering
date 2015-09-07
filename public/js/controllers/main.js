@@ -1,7 +1,23 @@
-angular.module('menuController', [])
+angular.module('menuController', ['ngRoute'])
+	.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider){
+		$routeProvider
+			.when('/admin', {
+			templateUrl: 'views/admin.html',
+			controller: 'adminController'
+			})
+			.when('/options', {
+			templateUrl: 'views/index.html',
+			controller: 'mainController'
+			})
+			.otherwise({
+				redirectTo:"/options"
+			})
+			 $locationProvider.html5Mode(true);
+	}])
 
 	// inject the Menu service factory into our controller
 	.controller('mainController', ['$scope','$http','Menus','Orders',"ModalService", function($scope, $http, Menus, Orders, ModalService) {
+		console.log("mainController")
 		$scope.formData = {};
 		$scope.loading = true;
 		$scope.orders = [];
@@ -86,4 +102,8 @@ angular.module('menuController', [])
 			$element.modal('hide')
 			close($scope.order, 500); // close, but give 500ms for bootstrap to animate
 		};
+	}])
+	.controller("adminController",['$scope','$http', function($scope, $http) {
+		console.log('adminController')
+		$scope.message = "hello";
 	}])

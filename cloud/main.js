@@ -6,6 +6,8 @@ var app      = express(); 								// create our app w/ express
 // var database = require('./config/database'); 			// load the database config
 // var morgan   = require('morgan');
 var bodyParser = express.bodyParser();
+app.set('views','cloud/views')
+app.set('view engine','jade')
 // var methodOverride = require('method-override');
 
 // configuration ===============================================================

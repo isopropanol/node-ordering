@@ -1,0 +1,41 @@
+doctype html
+// ASSIGN OUR ANGULAR MODULE
+html(ng-app='quickOrder')
+	head
+		// META
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		// Optimize mobile viewport
+		title Node/Angular Menu App
+		// SCROLLS
+		link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css')
+		// load bootstrap
+		link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
+		link(rel='stylesheet', href='/vendor/admin-lte-2.1.1/css/AdminLTE.min.css')
+		// SPELLS
+		script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
+		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js')
+		// load angular
+		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js')
+		script(src='vendor/angular-modal-service/angular-modal-service.min.js')
+		// load angular
+		script(src='//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js')
+		// load angular component for timepicker
+		script(src='//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js')
+		script(src='//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js')
+		// load bootstrap
+		script(src='js/controllers/main.js')
+		// load up our controller
+		script(src='js/services/menus.js')
+		// load our menu service
+		script(src='js/services/orders.js')
+		// load our order service
+		script(src='js/core.js')
+		// load our main application
+		script(src='vendor/admin-lte-2.1.1/js/app.min.js')
+	// SET THE CONTROLLER
+	body.layout-top-nav(ng-app='menuController')
+		.content-wrapper(ng-view)
+			
+		script(type='text/ng-template', id='modal.html', src='/views/orderModal.html')
+		script(type='text/ng-template', id='modal.html', src='/views/admin.html')
