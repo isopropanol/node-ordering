@@ -21,9 +21,26 @@ Node provides the RESTful API. Angular provides the frontend and accesses the AP
 3. Transfer masterkey and app id to sample-global.json and rename to global.json
 4. parse deploy
 
+## Basic Schema
+#### Menu
+	- name (string)
+	- description (string)
+
+#### MenuItem
+	- name (string)
+	- description (string)
+	- menu (--> Menu)
+
+#### Order
+	- clientFirstname (string)
+	- clientLastname (string)
+	- phone (string)
+	- menuItem (--> MenuItem)
+	- pickupAt (date)
+
 ## TODO
  - limit on operating hours of restaurant
- - Multiple menu item orders
+ - Multiple menu item orders (convert order menuItem pointer to relation and store item counts)
  - user authentication for orders list
  - Menu customization from admin
  - editing menu items + contents of menus
