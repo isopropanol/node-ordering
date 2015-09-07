@@ -71,6 +71,7 @@ angular.module('menuController', [])
 		$scope.menuItem = menuItem;
 
 		$scope.close = function() {
+			console.log("SUBMITTED")
 			$element.modal('hide')
 			close($scope.order, 500); // close, but give 500ms for bootstrap to animate
 		};

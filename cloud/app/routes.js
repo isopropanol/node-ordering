@@ -69,6 +69,7 @@ module.exports = function(app) {
 				clientFirstname:req.body.firstname,
 				clientLastname:req.body.lastname,
 				menuItem:menuItem,
+				phone:req.body.phone,
 				pickupAt:new Date(req.body.time)
 			})
 		}).then(function(order){
