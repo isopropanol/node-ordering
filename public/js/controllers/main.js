@@ -24,7 +24,10 @@ angular.module('menuController', [])
 			// if form is empty, nothing will happen
 			ModalService.showModal({
 				templateUrl: "views/orderModal.html",
-				controller: "modalController"
+				controller: "modalController",
+				inputs: {
+					menuItem: menuItem
+				}
 			}).then(function(modal) {
 				console.log(modal)
 			//it's a bootstrap element, use 'modal' to show it
@@ -61,7 +64,9 @@ angular.module('menuController', [])
 		// 		});
 		// };
 	}])
-	.controller("modalController",['$scope','$http','close', function($scope, $http,close) {
+	.controller("modalController",['$scope','$http','menuItem','close', function($scope, $http, menuItem ,close) {
+		$scope.menuItem = menuItem;
+
 		$scope.close = function(result) {
 			close(result, 500); // close, but give 500ms for bootstrap to animate
 		};
