@@ -5,12 +5,12 @@ angular.module('menuController', ['ngRoute'])
 			templateUrl: 'views/admin.html',
 			controller: 'adminController'
 			})
-			.when('/options', {
+			.when('/', {
 			templateUrl: 'views/index.html',
 			controller: 'mainController'
 			})
 			.otherwise({
-				redirectTo:"/options"
+				redirectTo:"/"
 			})
 			 $locationProvider.html5Mode(true);
 	}])
