@@ -64,10 +64,20 @@ angular.module('menuController', [])
 		// 		});
 		// };
 	}])
-	.controller("modalController",['$scope','$http','menuItem','close', function($scope, $http, menuItem ,close) {
+	.controller("modalController",['$scope','$http','menuItem','close','$element', function($scope, $http, menuItem ,close,$element) {
+		var coeff = 1000 * 60 * 5;
+		var date = new Date();  //or use any other date
+		var rounded = new Date(Math.round(date.getTime() / coeff) * coeff)
+		$scope.order = {
+			firstname:"",
+			lastname:"",
+			phone:"",
+			time: rounded
+		}
 		$scope.menuItem = menuItem;
 
-		$scope.close = function(result) {
-			close(result, 500); // close, but give 500ms for bootstrap to animate
+		$scope.close = function() {
+			$element.modal('hide')
+			close($scope.order, 500); // close, but give 500ms for bootstrap to animate
 		};
 	}])
